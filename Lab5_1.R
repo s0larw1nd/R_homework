@@ -81,12 +81,15 @@ axis(2, at = 0:5, labels = 0:5)
 legend("top", legend = rownames(df), col=c("red","green","blue","yellow","grey","purple"), lwd=
          10, bty = "n")
 #Боксплоты
-boxplot(Birth_Rate ~ Region, data = data_orig, ylab = "Birth_Rate", frame = FALSE, col = "lightgray")
-boxplot(Death_Rate ~ Region, data = data_orig, ylab = "Death_Rate", frame = FALSE, col = "lightgray")
-boxplot(Child_Mortality ~ Region, data = data_orig, ylab = "Child_Mortality", frame = FALSE, col = "lightgray")
-boxplot(Life_male ~ Region, data = data_orig, ylab = "Life_male", frame = FALSE, col = "lightgray")
-boxplot(Life_female ~ Region, data = data_orig, ylab = "Life_female", frame = FALSE, col = "lightgray")
-boxplot(Salary ~ Region, data = data_orig, ylab = "Salary", frame = FALSE, col = "lightgray")
+data_bp <- data_orig[-8]
+data_bp$Region <- groups
+par(mfrow = c(2, 3))
+boxplot(Birth_Rate ~ Region, data = data_bp, ylab = "Birth_Rate", frame = FALSE, col = "lightgray")
+boxplot(Death_Rate ~ Region, data = data_bp, ylab = "Death_Rate", frame = FALSE, col = "lightgray")
+boxplot(Child_Mortality ~ Region, data = data_bp, ylab = "Child_Mortality", frame = FALSE, col = "lightgray")
+boxplot(Life_male ~ Region, data = data_bp, ylab = "Life_male", frame = FALSE, col = "lightgray")
+boxplot(Life_female ~ Region, data = data_bp, ylab = "Life_female", frame = FALSE, col = "lightgray")
+boxplot(Salary ~ Region, data = data_bp, ylab = "Salary", frame = FALSE, col = "lightgray")
 
 #Кластеризация
 km.res <- kmeans(data, 4, nstart = 10)
@@ -100,7 +103,7 @@ pairs(data,main= "Индекс качества жизни", col = c("red","gree
 #3D скаттерплот
 install.packages("scatterplot3d")
 library("scatterplot3d")
-colors <- c("red","green","blue","yellow","grey","purple")
-colors <- colors[as.numeric(data_orig$Region)]
-s3d <- scatterplot3d(data_orig[,5:7], main= "Регионы", pch = 16, color = colors)
-legend("right", legend = 1:6, col = c("red","green","blue","yellow","grey","purple"), pch = 16)
+colors <- c("red","green","blue","yellow")
+colors <- colors[as.numeric(data_bp$Region)]
+s3d <- scatterplot3d(data_bp[,5:7], main= "Регионы", pch = 16, color = colors)
+legend("right", legend = 1:4, col = c("red","green","blue","yellow"), pch = 16)
